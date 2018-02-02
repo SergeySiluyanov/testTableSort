@@ -1,0 +1,41 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none !important;
+}
+
+button:hover {
+  color: #9d9d9d !important;
+}
+
+table > thead > tr > th div {
+  width: 10px;
+}
+
+table > thead > tr > th {
+  padding: 8px 14px !important;
+}
+
+table > tbody > tr > td:last-child {
+  text-align: right;
+}
+
+table > tbody > tr:nth-child(2n+1) {
+  background: #f9f9f9;
+}
+
+ul {
+  background: green;
+}
