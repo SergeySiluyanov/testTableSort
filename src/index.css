@@ -20,11 +20,9 @@ button:hover {
   color: #9d9d9d !important;
 }
 
-table > thead > tr > th div {
-  width: 10px;
-}
 
 table > thead > tr > th {
+  cursor: pointer;
   padding: 8px 14px !important;
 }
 
@@ -36,6 +34,55 @@ table > tbody > tr:nth-child(2n+1) {
   background: #f9f9f9;
 }
 
-ul {
-  background: green;
+ul li a {
+  cursor: pointer;
 }
+
+/* ::global .sorting .flex {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+::global .sorting span {
+  display: inline-block;
+}
+
+::global .sorting .icon {
+  font-size: 8px;
+  color: #dfdfdf;
+  width: 4px;
+}
+
+::global .tdName {
+  width: 300px;
+}
+
+::global .tdPosition {
+  width: 380px;
+}
+
+::global .tdOffice {
+  width: 185px;
+}
+
+::global .tdAge {
+  text-align: right;
+  width: 70px;
+}
+
+::global .tdStartDate {
+  width: 120px;
+}
+
+::global .tdSalary {
+  width: 100px;
+}
+
+::global .pagination > li > a,
+::global .pagination > li > span {
+  background: none;
+  margin: 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0);
+} */
