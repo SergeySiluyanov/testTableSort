@@ -8,81 +8,77 @@ html {
   box-sizing: inherit;
 }
 
-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  outline: none !important;
+.tableModules {
+  position: relative;
+  width: 100%;
 }
 
-button:hover {
-  color: #9d9d9d !important;
+.searchForm {
+  position: relative;
+  width: 100%;
 }
 
-
-table > thead > tr > th {
-  cursor: pointer;
-  padding: 8px 14px !important;
+.paginationList {
+  position: relative;
+  width: 100%;
 }
 
-table > tbody > tr > td:last-child {
-  text-align: right;
-}
-
-table > tbody > tr:nth-child(2n+1) {
-  background: #f9f9f9;
+.table {
+  width: 100%;
+  position: relative;
 }
 
 ul li a {
   cursor: pointer;
 }
-
-/* ::global .sorting .flex {
+.sorting {
+  cursor: pointer;
+}
+.sorting .flex {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
 }
 
-::global .sorting span {
+.sorting span {
   display: inline-block;
 }
 
-::global .sorting .icon {
+.sorting .icon {
   font-size: 8px;
   color: #dfdfdf;
   width: 4px;
 }
 
-::global .tdName {
+.tdName {
   width: 300px;
 }
 
-::global .tdPosition {
+.tdPosition {
   width: 380px;
 }
 
-::global .tdOffice {
+.tdOffice {
   width: 185px;
 }
 
-::global .tdAge {
+.tdAge {
   text-align: right;
   width: 70px;
 }
 
-::global .tdStartDate {
+.tdStartDate {
   width: 120px;
 }
 
-::global .tdSalary {
+.tdSalary {
   width: 100px;
 }
 
-::global .pagination > li > a,
-::global .pagination > li > span {
+.paginationList > li > a,
+.paginationList > li > span {
   background: none;
   margin: 0 10px;
   border: 1px solid rgba(255, 255, 255, 0);
-} */
+}

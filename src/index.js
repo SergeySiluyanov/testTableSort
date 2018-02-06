@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import styles from './index.css';
 
 var tableInfo = [
   {
@@ -86,14 +87,124 @@ var tableInfo = [
 var countElements = tableInfo.length;
 var countElementsOnPage = 5;
 var countPage = Math.floor(countElements / countElementsOnPage);
-var tableList = document.getElementById('table_list');
 var activePage = 1;
 var i = 0;
+
+function drawModuleTable() {
+  var body = document.querySelector('body');
+  body.innerHTML = `<div class="${styles.tableModules}">\
+                      <div class="container">\
+                          <div class="row">
+                            <div class="${styles.searchForm}">
+                              <form class="navbar-form navbar-right" role="search">\
+                                <span>Search:</span>\
+                                <div class="form-group">\
+                                    <input type="text" class="form-control">\
+                                  </div>\
+                                <button type="submit" class="btn btn-default">Search</button>\
+                              </form>
+                            </div>\
+                              <table class="${
+                                styles.table
+                              } table" id="table_list">\
+                                <thead>\
+                                    <tr>\
+                                        <th data-type="name" class="${
+                                          styles.sorting
+                                        }">\
+                                          <div class="${styles.flex}">\
+                                              <span>Name</span>\
+                                              <div class="${styles.icon}">\
+                                                  <i class="glyphicon glyphicon-triangle-top"></i>\
+                                                  <i class="glyphicon glyphicon-triangle-bottom"></i>\
+                                              </div>\
+                                          </div>\
+                                        </th>\
+                                        <th data-type="position" class="${
+                                          styles.sorting
+                                        }">\
+                                          <div class="${styles.flex}">\
+                                              <span>Position</span>\
+                                              <div class="${styles.icon}">\
+                                                  <i class="glyphicon glyphicon-triangle-top"></i>\
+                                                  <i class="glyphicon glyphicon-triangle-bottom"></i>\
+                                              </div>\
+                                          </div>\
+                                        </th>\
+                                        <th data-type="office" class="${
+                                          styles.sorting
+                                        }">\
+                                          <div class="${styles.flex}">\
+                                              <span>Office</span>\
+                                              <div class="${styles.icon}">\
+                                                  <i class="glyphicon glyphicon-triangle-top"></i>\
+                                                  <i class="glyphicon glyphicon-triangle-bottom"></i>\
+                                              </div>\
+                                          </div>\
+                                        </th>\
+                                        <th data-type="age" class="${
+                                          styles.sorting
+                                        }">\
+                                          <div class="${styles.flex}">\
+                                              <span>Age</span>\
+                                              <div class="${styles.icon}">\
+                                                  <i class="glyphicon glyphicon-triangle-top"></i>\
+                                                  <i class="glyphicon glyphicon-triangle-bottom"></i>\
+                                              </div>\
+                                          </div>\
+                                        </th>\
+                                        <th data-type="startDate" class="${
+                                          styles.sorting
+                                        }">\
+                                          <div class="${styles.flex}">\
+                                              <span>Start Date</span>\
+                                              <div class="${styles.icon}">\
+                                                  <i class="glyphicon glyphicon-triangle-top"></i>\
+                                                  <i class="glyphicon glyphicon-triangle-bottom"></i>\
+                                              </div>\
+                                          </div>\
+                                        </th>\
+                                        <th data-type="salary" class="${
+                                          styles.sorting
+                                        }">\
+                                          <div class="${styles.flex}">\
+                                              <span>Salary</span>\
+                                              <div class="${styles.icon}">\
+                                                  <i class="glyphicon glyphicon-triangle-top"></i>\
+                                                  <i class="glyphicon glyphicon-triangle-bottom"></i>\
+                                              </div>\
+                                          </div>\
+                                        </th>\
+                                    </tr>\
+                                </thead>\
+                                <tbody id="tbody">\
+                                </tbody>\
+                              </table>\
+                            <div class="${styles.paginationList}">
+                              <nav class="navbar-right">\
+                                <ul class="pagination" id="pagination">\
+                                  <li class="page-item">\
+                                      <a class="page-link">Previous</a>\
+                                  </li>\
+                                  <li class="page-item">\
+                                      <a class="page-link">Next</a>\
+                                  </li>\
+                                </ul>\
+                              </nav>
+                            </div>
+                          </div>\
+                      </div>\
+                    </div>`;
+  var tableList = document.querySelector('table');
+  tableList.setAttribute('data-page', activePage);
+  drawTable();
+  pageFunction(tableList);
+  sortFunction();
+}
 
 function drawTable() {
   var elTbody = document.getElementById('tbody');
   elTbody.innerHTML = '';
-  tableList.setAttribute('data-page', activePage);
   for (
     i = (activePage - 1) * countElementsOnPage;
     i < countElementsOnPage * activePage;
@@ -106,12 +217,12 @@ function drawTable() {
     var tdAge = table.insertCell(3);
     var tdStartDate = table.insertCell(4);
     var tdSalary = table.insertCell(5);
-    tdName.setAttribute('class', 'tdName');
-    tdPosition.setAttribute('class', 'tdPosition');
-    tdOffice.setAttribute('class', 'tdOffice');
-    tdAge.setAttribute('class', 'tdAge');
-    tdStartDate.setAttribute('class', 'tdStartDate');
-    tdSalary.setAttribute('class', 'tdSalary');
+    tdName.setAttribute('class', `${styles.tdName}`);
+    tdPosition.setAttribute('class', `${styles.tdPosition}`);
+    tdOffice.setAttribute('class', `${styles.tdOffice}`);
+    tdAge.setAttribute('class', `${styles.tdAge}`);
+    tdStartDate.setAttribute('class', `${styles.tdStartDate}`);
+    tdSalary.setAttribute('class', `${styles.tdSalary}`);
     tdName.innerHTML = tableInfo[i].name;
     tdPosition.innerHTML = tableInfo[i].position;
     tdOffice.innerHTML = tableInfo[i].office;
@@ -121,58 +232,11 @@ function drawTable() {
   }
 }
 
-var objTh = document.getElementsByTagName('th');
-var arrTh = Array.prototype.slice.call(objTh, 0);
-
-arrTh.forEach(colHead => {
-  colHead.addEventListener('click', () => {
-    var selectTh = document.querySelectorAll('thead .active');
-    selectTh.forEach(item => {
-      var classArr = item.getAttribute('class').split(' ');
-      for (var z = 0; z < classArr.length; z++) {
-        if (classArr[z] == 'active') {
-          classArr.splice(z, 1);
-          z--;
-        }
-      }
-      item.className = classArr.join(' ');
-    });
-
-    var selectAttr = colHead.getAttribute('data-type');
-    if (colHead.classList.contains('active')) {
-      colHead.classList.add('down');
-      tableInfo.sort(function(a, b) {
-        if (a[selectAttr] > b[selectAttr]) {
-          return 1;
-        }
-        if (a[selectAttr] < b[selectAttr]) {
-          return -1;
-        }
-        return 0;
-      });
-      colHead.classList.remove('active');
-    } else {
-      colHead.classList.add('active');
-      colHead.classList.add('down');
-      tableInfo.sort(function(a, b) {
-        if (a[selectAttr] < b[selectAttr]) {
-          return 1;
-        }
-        if (a[selectAttr] > b[selectAttr]) {
-          return -1;
-        }
-        return 0;
-      });
-    }
-    return drawTable();
-  });
-});
-
-function pageFunction() {
+function pageFunction(tableList) {
   for (var j = 1; j <= countPage; j++) {
     var newLi = document.createElement('li');
     newLi.setAttribute('class', 'page-item');
-    newLi.innerHTML = '<a class="page-link">' + (countPage - j + 1) + '</a>';
+    newLi.innerHTML = `<a class="page-link">` + (countPage - j + 1) + '</a>';
     var pagination = document.getElementById('pagination');
     pagination.insertBefore(newLi, pagination.children[1]);
   }
@@ -207,5 +271,39 @@ function pageFunction() {
   });
 }
 
-pageFunction();
-drawTable();
+function sortFunction() {
+  var objTh = document.getElementsByTagName('th');
+  var arrTh = Array.prototype.slice.call(objTh, 0);
+
+  arrTh.forEach(colHead => {
+    colHead.addEventListener('click', () => {
+      var selectAttr = colHead.getAttribute('data-type');
+      if (colHead.classList.contains('active')) {
+        tableInfo.sort(function(a, b) {
+          if (a[selectAttr] > b[selectAttr]) {
+            return 1;
+          }
+          if (a[selectAttr] < b[selectAttr]) {
+            return -1;
+          }
+          return 0;
+        });
+        colHead.classList.remove('active');
+      } else {
+        colHead.classList.add('active');
+        tableInfo.sort(function(a, b) {
+          if (a[selectAttr] < b[selectAttr]) {
+            return 1;
+          }
+          if (a[selectAttr] > b[selectAttr]) {
+            return -1;
+          }
+          return 0;
+        });
+      }
+      return drawTable();
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', drawModuleTable);
