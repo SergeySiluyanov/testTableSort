@@ -82,11 +82,22 @@ var tableInfo = [
     startDate: '2012/06/01',
     salary: 115000,
   },
+  {
+    name: 'Norita Chandler',
+    position: 'Sales Assistant',
+    office: 'San Francisco',
+    age: 32,
+    startDate: '2013/06/01',
+    salary: 125000,
+  },
 ];
 
 var countElements = tableInfo.length;
 var countElementsOnPage = 5;
-var countPage = Math.floor(countElements / countElementsOnPage);
+var countPage = countElements / countElementsOnPage;
+if (countPage ^ !0) {
+  countPage = Math.floor(countPage) + 1;
+}
 var activePage = 1;
 var i = 0;
 
@@ -195,10 +206,8 @@ function drawModuleTable() {
                           </div>\
                       </div>\
                     </div>`;
-  var tableList = document.querySelector('table');
-  tableList.setAttribute('data-page', activePage);
   drawTable();
-  pageFunction(tableList);
+  pageFunction();
   sortFunction();
 }
 
@@ -207,10 +216,10 @@ function drawTable() {
   elTbody.innerHTML = '';
   for (
     i = (activePage - 1) * countElementsOnPage;
-    i < countElementsOnPage * activePage;
+    i < countElementsOnPage * activePage && i < tableInfo.length;
     i++
   ) {
-    var table = document.getElementsByTagName('tbody')[0].insertRow(0);
+    var table = document.querySelector('tbody').insertRow();
     var tdName = table.insertCell(0);
     var tdPosition = table.insertCell(1);
     var tdOffice = table.insertCell(2);
@@ -232,7 +241,9 @@ function drawTable() {
   }
 }
 
-function pageFunction(tableList) {
+function pageFunction() {
+  var tableList = document.querySelector('table');
+  tableList.setAttribute('data-page', activePage);
   for (var j = 1; j <= countPage; j++) {
     var newLi = document.createElement('li');
     newLi.setAttribute('class', 'page-item');
@@ -272,18 +283,17 @@ function pageFunction(tableList) {
 }
 
 function sortFunction() {
-  var objTh = document.getElementsByTagName('th');
-  var arrTh = Array.prototype.slice.call(objTh, 0);
+  var arrTh = document.querySelectorAll('th');
 
   arrTh.forEach(colHead => {
     colHead.addEventListener('click', () => {
       var selectAttr = colHead.getAttribute('data-type');
       if (colHead.classList.contains('active')) {
-        tableInfo.sort(function(a, b) {
-          if (a[selectAttr] > b[selectAttr]) {
+        tableInfo.sort((a, b) => {
+          if (a[selectAttr] < b[selectAttr]) {
             return 1;
           }
-          if (a[selectAttr] < b[selectAttr]) {
+          if (a[selectAttr] > b[selectAttr]) {
             return -1;
           }
           return 0;
@@ -291,17 +301,28 @@ function sortFunction() {
         colHead.classList.remove('active');
       } else {
         colHead.classList.add('active');
-        tableInfo.sort(function(a, b) {
-          if (a[selectAttr] < b[selectAttr]) {
+        tableInfo.sort((a, b) => {
+          if (a[selectAttr] > b[selectAttr]) {
             return 1;
           }
-          if (a[selectAttr] > b[selectAttr]) {
+          if (a[selectAttr] < b[selectAttr]) {
             return -1;
           }
           return 0;
         });
       }
-      return drawTable();
+      var selectTh = document.querySelectorAll('thead .active');
+      selectTh.forEach(item => {
+        var classArr = item.getAttribute('class').split(' ');
+        for (var z = 0; z < classArr.length; z++) {
+          if (classArr[z] == 'active' && colHead !== item) {
+            classArr.splice(z, 1);
+          }
+        }
+        item.className = classArr.join(' ');
+      });
+      activePage = 1;
+      return drawTable(activePage);
     });
   });
 }

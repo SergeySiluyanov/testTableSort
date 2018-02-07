@@ -31,9 +31,11 @@ html {
 ul li a {
   cursor: pointer;
 }
+
 .sorting {
   cursor: pointer;
 }
+
 .sorting .flex {
   display: flex;
   flex-wrap: nowrap;
